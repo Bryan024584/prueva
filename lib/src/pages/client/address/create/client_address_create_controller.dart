@@ -12,7 +12,6 @@ import 'package:udemy_flutter_delivery/src/pages/client/address/map/client_addre
 import 'package:udemy_flutter_delivery/src/providers/address_provider.dart';
 
 class ClientAddressCreateController extends GetxController {
-
   TextEditingController addressController = TextEditingController();
   TextEditingController neighborhoodController = TextEditingController();
   TextEditingController refPointController = TextEditingController();
@@ -31,10 +30,9 @@ class ClientAddressCreateController extends GetxController {
         context: context,
         builder: (context) => ClientAddressMapPage(),
         isDismissible: false,
-        enableDrag: false
-    );
+        enableDrag: false);
 
-    print('REF POINT MAP ${refPointMap}');
+    print('REF POINT MAP $refPointMap');
     refPointController.text = refPointMap['address'];
     latRefPoint = refPointMap['lat'];
     lngRefPoint = refPointMap['lng'];
@@ -46,15 +44,15 @@ class ClientAddressCreateController extends GetxController {
 
     if (isValidForm(addressName, neighborhood)) {
       Address address = Address(
-        address: addressName,
-        neighborhood: neighborhood,
-        lat: latRefPoint,
-        lng: lngRefPoint,
-        idUser: user.id
-      );
+          address: addressName,
+          neighborhood: neighborhood,
+          lat: latRefPoint,
+          lng: lngRefPoint,
+          idUser: user.id);
 
       ResponseApi responseApi = await addressProvider.create(address);
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+      Fluttertoast.showToast(
+          msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
 
       if (responseApi.success == true) {
         address.id = responseApi.data;
@@ -64,29 +62,27 @@ class ClientAddressCreateController extends GetxController {
 
         Get.back();
       }
-
     }
   }
 
   bool isValidForm(String address, String neighborhood) {
-    if (address.isEmpty){
+    if (address.isEmpty) {
       Get.snackbar('Formulario no valido', 'Ingresa el nombre de la direccion');
       return false;
     }
-    if (neighborhood.isEmpty){
+    if (neighborhood.isEmpty) {
       Get.snackbar('Formulario no valido', 'Ingresa el nombre del barrio');
       return false;
     }
-    if (latRefPoint == 0){
+    if (latRefPoint == 0) {
       Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
       return false;
     }
-    if (lngRefPoint == 0){
+    if (lngRefPoint == 0) {
       Get.snackbar('Formulario no valido', 'Selecciona el punto de referencia');
       return false;
     }
 
     return true;
   }
-
 }

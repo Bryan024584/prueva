@@ -10,12 +10,14 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
 
   RestaurantOrdersDetailController con = Get.put(RestaurantOrdersDetailController());
 
+  RestaurantOrdersDetailPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(
-        color: Color.fromRGBO(245, 245, 245, 1),
+        color: const Color.fromRGBO(245, 245, 245, 1),
         height: con.order.status == 'PAGADO'
             ? MediaQuery.of(context).size.height * 0.50
             : MediaQuery.of(context).size.height * 0.45,
@@ -31,10 +33,10 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
           'Order #${con.order.id}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black
           ),
         ),
@@ -53,11 +55,11 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
 
   Widget _dataClient() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Cliente y Telefono'),
+        title: const Text('Cliente y Telefono'),
         subtitle: Text('${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
-        trailing: Icon(Icons.person),
+        trailing: const Icon(Icons.person),
       ),
     );
   }
@@ -65,11 +67,11 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
   Widget _dataDelivery() {
     return con.order.status != 'PAGADO'
     ? Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Repartidor asignado'),
+        title: const Text('Repartidor asignado'),
         subtitle: Text('${con.order.delivery?.name ?? ''} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? ''}'),
-        trailing: Icon(Icons.delivery_dining),
+        trailing: const Icon(Icons.delivery_dining),
       ),
     )
     : Container();
@@ -77,46 +79,46 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
 
   Widget _dataAddress() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Direccion de entrega'),
+        title: const Text('Direccion de entrega'),
         subtitle: Text(con.order.address?.address ?? ''),
-        trailing: Icon(Icons.location_on),
+        trailing: const Icon(Icons.location_on),
       ),
     );
   }
 
   Widget _dataDate() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: Text('Fecha del pedido'),
-        subtitle: Text('${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
-        trailing: Icon(Icons.timer),
+        title: const Text('Fecha del pedido'),
+        subtitle: Text(RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)),
+        trailing: const Icon(Icons.timer),
       ),
     );
   }
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 7),
       child: Row(
         children: [
           _imageProduct(product),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 product.name ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               Text(
                 'Cantidad: ${product.quantity}',
-                style: TextStyle(
+                style: const TextStyle(
                     // fontWeight: FontWeight.bold
                   fontSize: 13
                 ),
@@ -129,7 +131,7 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
   }
 
   Widget _imageProduct(Product product) {
-    return Container(
+    return SizedBox(
       height: 50,
       width: 50,
       // padding: EdgeInsets.all(2),
@@ -138,10 +140,10 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
         child: FadeInImage(
           image: product.image1 != null
               ? NetworkImage(product.image1!)
-              : AssetImage('assets/img/no-image.png') as ImageProvider,
+              : const AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
-          fadeInDuration: Duration(milliseconds: 50),
-          placeholder:  AssetImage('assets/img/no-image.png'),
+          fadeInDuration: const Duration(milliseconds: 50),
+          placeholder:  const AssetImage('assets/img/no-image.png'),
         ),
       ),
     );
@@ -155,8 +157,8 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
         ? Container(
           width: double.infinity,
           alignment: Alignment.centerLeft,
-          margin: EdgeInsets.only(left: 30, top: 10),
-          child: Text(
+          margin: const EdgeInsets.only(left: 30, top: 10),
+          child: const Text(
             'ASIGNAR REPARTIDOR',
             style: TextStyle(
               fontStyle: FontStyle.italic,
@@ -175,20 +177,20 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
             children: [
               Text(
                 'TOTAL: \$${con.total.value}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17
                 ),
               ),
               con.order.status == 'PAGADO'
               ? Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 child: ElevatedButton(
                     onPressed: () => con.updateOrder(),
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15)
+                        padding: const EdgeInsets.all(15)
                     ),
-                    child: Text(
+                    child: const Text(
                       'DESPACHAR ORDEN',
                       style: TextStyle(
                           color: Colors.black
@@ -207,19 +209,19 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
 
   Widget _dropDownDeliveryMen(List<User> users) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 35),
-      margin: EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 35),
+      margin: const EdgeInsets.only(top: 15),
       child: DropdownButton(
         underline: Container(
           alignment: Alignment.centerRight,
-          child: Icon(
+          child: const Icon(
             Icons.arrow_drop_down_circle,
             color: Colors.amber,
           ),
         ),
         elevation: 3,
         isExpanded: true,
-        hint: Text(
+        hint: const Text(
           'Seleccionar repartidor',
           style: TextStyle(
 
@@ -229,7 +231,7 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
         items: _dropDownItems(users),
         value: con.idDelivery.value == '' ? null : con.idDelivery.value,
         onChanged: (option) {
-          print('Opcion seleccionada ${option}');
+          print('Opcion seleccionada $option');
           con.idDelivery.value = option.toString();
         },
       ),
@@ -238,8 +240,9 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _dropDownItems(List<User> users) {
     List<DropdownMenuItem<String>> list = [];
-    users.forEach((user) {
+    for (var user in users) {
       list.add(DropdownMenuItem(
+        value: user.id,
         child: Row(
           children: [
             Container(
@@ -258,9 +261,8 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
             Text(user.name ?? ''),
           ],
         ),
-        value: user.id,
       ));
-    });
+    }
 
     return list;
   }

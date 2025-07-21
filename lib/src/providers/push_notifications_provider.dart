@@ -3,8 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:udemy_flutter_delivery/src/providers/users_provider.dart';
 
 class PushNotificationsProvider {
-
-  AndroidNotificationChannel channel = AndroidNotificationChannel(
+  AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     importance: Importance.high,
@@ -15,7 +14,7 @@ class PushNotificationsProvider {
   void initPushNotifications() async {
     await plugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     /// Update the iOS foreground notification presentation options to allow
@@ -38,7 +37,6 @@ class PushNotificationsProvider {
     });
     // PRIMER PLANO
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-
       print('NUEVA NOTIFICACION EN PRIMER PLANO');
       showNotification(message);
     });
@@ -74,5 +72,4 @@ class PushNotificationsProvider {
       await usersProvider.updateNotificationToken(idUser, token);
     }
   }
-
 }

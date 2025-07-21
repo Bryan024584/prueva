@@ -8,15 +8,17 @@ class ClientAddressListPage extends StatelessWidget {
 
   ClientAddressListController con = Get.put(ClientAddressListController());
 
+  ClientAddressListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       bottomNavigationBar: _buttonNext(context),
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
             color: Colors.black
         ),
-        title: Text(
+        title: const Text(
           'Mis Direcciones',
           style: TextStyle(
               color: Colors.black
@@ -39,13 +41,13 @@ class ClientAddressListPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 50,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
           onPressed: () => con.createOrder(),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'CONTINUAR',
             style: TextStyle(
                 color: Colors.black
@@ -57,7 +59,7 @@ class ClientAddressListPage extends StatelessWidget {
 
   Widget _listAddress(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 50),
+      margin: const EdgeInsets.only(top: 50),
       child: FutureBuilder(
           future: con.getAddress(),
           builder: (context, AsyncSnapshot<List<Address>> snapshot) {
@@ -65,7 +67,7 @@ class ClientAddressListPage extends StatelessWidget {
               if (snapshot.data!.isNotEmpty) {
                 return ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     itemBuilder: (_, index) {
                       return _radioSelectorAddress(snapshot.data![index], index);
                     }
@@ -89,7 +91,7 @@ class ClientAddressListPage extends StatelessWidget {
 
   Widget _radioSelectorAddress(Address address, int index) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           Row(
@@ -104,14 +106,14 @@ class ClientAddressListPage extends StatelessWidget {
                 children: [
                   Text(
                     address.address ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold
                     ),
                   ),
                   Text(
                     address.neighborhood ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 12
                     ),
                   )
@@ -127,8 +129,8 @@ class ClientAddressListPage extends StatelessWidget {
 
   Widget _textSelectAddress() {
     return Container(
-      margin: EdgeInsets.only(top: 30, left: 30),
-      child: Text(
+      margin: const EdgeInsets.only(top: 30, left: 30),
+      child: const Text(
         'Elije donde recibir tu pedido',
         style: TextStyle(
           color: Colors.black,
@@ -142,7 +144,7 @@ class ClientAddressListPage extends StatelessWidget {
   Widget _iconAddressCreate() {
     return IconButton(
         onPressed: () => con.goToAddressCreate(),
-        icon: Icon(
+        icon: const Icon(
           Icons.add,
           color: Colors.black,
         )

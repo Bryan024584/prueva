@@ -1,5 +1,4 @@
 class MercadoPagoIssuer {
-
   //IDENTIFICACION DEL EMISON
   String? id;
 
@@ -11,22 +10,18 @@ class MercadoPagoIssuer {
   static List<MercadoPagoIssuer> fromJsonList(List<dynamic> jsonList) {
     List<MercadoPagoIssuer> toList = [];
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       MercadoPagoIssuer model = MercadoPagoIssuer.fromJson(item);
       toList.add(model);
-    });
+    }
 
     return toList;
   }
 
-  MercadoPagoIssuer.fromJson( Map<String, dynamic> json ) {
-    id      = json['id'].toString();
-    name    = json['name'];
+  MercadoPagoIssuer.fromJson(Map<String, dynamic> json) {
+    id = json['id'].toString();
+    name = json['name'];
   }
 
-  Map<String, dynamic> toJson() =>
-      {
-        'id'    : id,
-        'name'  : name
-      };
+  Map<String, dynamic> toJson() => {'id': id, 'name': name};
 }

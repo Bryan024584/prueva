@@ -16,6 +16,8 @@ class DeliveryHomePage extends StatelessWidget {
 
   DeliveryHomeController con = Get.put(DeliveryHomeController());
 
+  DeliveryHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -42,14 +44,14 @@ class DeliveryHomePage extends StatelessWidget {
       onItemSelected: (index) => con.changeTab(index),
       items: [
         BottomNavyBarItem(
-            icon: Icon(Icons.list),
-            title: Text('Pedidos'),
+            icon: const Icon(Icons.list),
+            title: const Text('Pedidos'),
             activeColor: Colors.white,
             inactiveColor: Colors.black
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Perfil'),
+            icon: const Icon(Icons.person),
+            title: const Text('Perfil'),
             activeColor: Colors.white,
             inactiveColor: Colors.black
         ),

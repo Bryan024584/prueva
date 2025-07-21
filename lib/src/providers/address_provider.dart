@@ -7,22 +7,19 @@ import 'package:udemy_flutter_delivery/src/models/response_api.dart';
 import 'package:udemy_flutter_delivery/src/models/user.dart';
 
 class AddressProvider extends GetConnect {
-
-  String url = Environment.API_URL + 'api/address';
+  String url = '${Environment.API_URL}api/address';
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<List<Address>> findByUser(String idUser) async {
-    Response response = await get(
-        '$url/findByUser/$idUser',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+    Response response = await get('$url/findByUser/$idUser', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
       return [];
     }
 
@@ -32,18 +29,13 @@ class AddressProvider extends GetConnect {
   }
 
   Future<ResponseApi> create(Address address) async {
-    Response response = await post(
-        '$url/create',
-        address.toJson(),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+    Response response = await post('$url/create', address.toJson(), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     ResponseApi responseApi = ResponseApi.fromJson(response.body);
 
     return responseApi;
   }
-
 }

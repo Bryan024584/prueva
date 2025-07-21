@@ -6,6 +6,8 @@ class ClientProfileInfoPage extends StatelessWidget {
 
   ClientProfileInfoController con = Get.put(ClientProfileInfoController());
 
+  ClientProfileInfoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +39,7 @@ class ClientProfileInfoPage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -63,11 +65,11 @@ class ClientProfileInfoPage extends StatelessWidget {
   Widget _buttonSignOut() {
     return SafeArea(
         child: Container(
-          margin: EdgeInsets.only(right: 20),
+          margin: const EdgeInsets.only(right: 20),
           alignment: Alignment.topRight,
           child: IconButton(
             onPressed: () => con.signOut(),
-            icon: Icon(
+            icon: const Icon(
               Icons.power_settings_new,
               color: Colors.white,
               size: 30,
@@ -79,11 +81,11 @@ class ClientProfileInfoPage extends StatelessWidget {
 
   Widget _buttonRoles() {
     return Container(
-      margin: EdgeInsets.only(right: 20),
+      margin: const EdgeInsets.only(right: 20),
       alignment: Alignment.topRight,
       child: IconButton(
         onPressed: () => con.goToRoles(),
-        icon: Icon(
+        icon: const Icon(
           Icons.supervised_user_circle,
           color: Colors.white,
           size: 30,
@@ -96,13 +98,13 @@ class ClientProfileInfoPage extends StatelessWidget {
   Widget _buttonUpdate(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: ElevatedButton(
           onPressed: () => con.goToProfileUpdate(),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'ACTUALIZAR DATOS',
             style: TextStyle(
                 color: Colors.black
@@ -116,12 +118,12 @@ class ClientProfileInfoPage extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: const EdgeInsets.only(top: 25),
         alignment: Alignment.topCenter,
         child:  CircleAvatar(
             backgroundImage:  con.user.value.image != null
                 ? NetworkImage(con.user.value.image!)
-                : AssetImage('assets/img/user_profile.png') as ImageProvider,
+                : const AssetImage('assets/img/user_profile.png') as ImageProvider,
             radius: 60,
             backgroundColor: Colors.white,
           ),
@@ -132,28 +134,28 @@ class ClientProfileInfoPage extends StatelessWidget {
 
   Widget _textName() {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       child: ListTile(
-        leading: Icon(Icons.person),
+        leading: const Icon(Icons.person),
         title:  Text('${con.user.value.name ?? ''} ${con.user.value.lastname ?? ''}'),
-        subtitle: Text('Nombre del usuario'),
+        subtitle: const Text('Nombre del usuario'),
       ),
     );
   }
 
   Widget _textEmail() {
     return ListTile(
-      leading: Icon(Icons.email),
+      leading: const Icon(Icons.email),
       title: Text(con.user.value.email ?? ''),
-      subtitle: Text('Email'),
+      subtitle: const Text('Email'),
     );
   }
 
   Widget _textPhone() {
     return ListTile(
-      leading: Icon(Icons.phone),
+      leading: const Icon(Icons.phone),
       title: Text(con.user.value.phone ?? ''),
-      subtitle: Text('Telefono'),
+      subtitle: const Text('Telefono'),
     );
   }
 

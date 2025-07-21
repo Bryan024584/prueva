@@ -7,6 +7,8 @@ class RegisterPage extends StatelessWidget {
 
   RegisterController con = Get.put(RegisterController());
 
+  RegisterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +26,10 @@ class RegisterPage extends StatelessWidget {
   Widget _buttonBack() {
     return SafeArea(
         child: Container(
-          margin: EdgeInsets.only(left: 20),
+          margin: const EdgeInsets.only(left: 20),
           child: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(
+            icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
                 size: 30,
@@ -49,7 +51,7 @@ class RegisterPage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.65,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -78,11 +80,11 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldEmail() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Correo electronico',
             prefixIcon: Icon(Icons.email)
         ),
@@ -92,11 +94,11 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldName() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.nameController,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Nombre',
             prefixIcon: Icon(Icons.person)
         ),
@@ -106,11 +108,11 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldLastName() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.lastnameController,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Apellido',
             prefixIcon: Icon(Icons.person_outline)
         ),
@@ -120,11 +122,11 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldPhone() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.phoneController,
         keyboardType: TextInputType.phone,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Telefono',
             prefixIcon: Icon(Icons.phone)
         ),
@@ -134,12 +136,12 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldPassword() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.passwordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Contraseña',
             prefixIcon: Icon(Icons.lock)
         ),
@@ -149,12 +151,12 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldConfirmPassword() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.confirmPasswordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Confirmar Contraseña',
             prefixIcon: Icon(Icons.lock_outline)
         ),
@@ -165,13 +167,13 @@ class RegisterPage extends StatelessWidget {
   Widget _buttonRegister(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
           onPressed: () => con.register(context),
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'REGISTRARSE',
             style: TextStyle(
                 color: Colors.black
@@ -185,7 +187,7 @@ class RegisterPage extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: const EdgeInsets.only(top: 25),
         alignment: Alignment.topCenter,
         child: GestureDetector(
           onTap: () => con.showAlertDialog(context),
@@ -193,7 +195,7 @@ class RegisterPage extends StatelessWidget {
             builder: (value) => CircleAvatar(
               backgroundImage: con.imageFile != null
                   ? FileImage(con.imageFile!)
-                  : AssetImage('assets/img/user_profile.png') as ImageProvider,
+                  : const AssetImage('assets/img/user_profile.png') as ImageProvider,
               radius: 60,
               backgroundColor: Colors.white,
             ),
@@ -205,8 +207,8 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textYourInfo() {
     return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 30),
-      child: Text(
+      margin: const EdgeInsets.only(top: 40, bottom: 30),
+      child: const Text(
         'INGRESA ESTA INFORMACION',
         style: TextStyle(
           color: Colors.black,

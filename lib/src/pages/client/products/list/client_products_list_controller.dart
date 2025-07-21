@@ -12,12 +12,10 @@ import 'package:udemy_flutter_delivery/src/providers/products_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ClientProductsListController extends GetxController {
-
   CategoriesProvider categoriesProvider = CategoriesProvider();
   ProductsProvider productsProvider = ProductsProvider();
 
   List<Product> selectedProducts = [];
-
 
   List<Category> categories = <Category>[].obs;
   var items = 0.obs;
@@ -30,15 +28,14 @@ class ClientProductsListController extends GetxController {
     if (GetStorage().read('shopping_bag') != null) {
       if (GetStorage().read('shopping_bag') is List<Product>) {
         selectedProducts = GetStorage().read('shopping_bag');
-      }
-      else {
-        selectedProducts = Product.fromJsonList(GetStorage().read('shopping_bag'));
+      } else {
+        selectedProducts =
+            Product.fromJsonList(GetStorage().read('shopping_bag'));
       }
 
-      selectedProducts.forEach((p) {
+      for (var p in selectedProducts) {
         items.value = items.value + (p.quantity!);
-      });
-
+      }
     }
   }
 
@@ -50,7 +47,7 @@ class ClientProductsListController extends GetxController {
 
     searchOnStoppedTyping = Timer(duration, () {
       productName.value = text;
-      print('TEXTO COMPLETO: ${text}');
+      print('TEXTO COMPLETO: $text');
     });
   }
 
@@ -60,27 +57,24 @@ class ClientProductsListController extends GetxController {
     categories.addAll(result);
   }
 
-  Future<List<Product>> getProducts(String idCategory, String productName) async {
-
+  Future<List<Product>> getProducts(
+      String idCategory, String productName) async {
     if (productName.isEmpty) {
       return await productsProvider.findByCategory(idCategory);
+    } else {
+      return await productsProvider.findByNameAndCategory(
+          idCategory, productName);
     }
-    else {
-      return await productsProvider.findByNameAndCategory(idCategory, productName);
-    }
-
   }
 
   void goToOrderCreate() {
     Get.toNamed('/client/orders/create');
   }
 
-  void openBottomSheet(BuildContext context, Product product) async{
-
+  void openBottomSheet(BuildContext context, Product product) async {
     showMaterialModalBottomSheet(
-        context: context,
-        builder: (context) => ClientProductsDetailPage(product: product),
+      context: context,
+      builder: (context) => ClientProductsDetailPage(product: product),
     );
   }
-
 }

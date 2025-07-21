@@ -10,48 +10,48 @@ import 'package:udemy_flutter_delivery/src/models/response_api.dart';
 import 'package:udemy_flutter_delivery/src/models/user.dart';
 
 class MercadoPagoProvider extends GetConnect {
-
   String url = Environment.API_MERCADO_PAGO;
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<List<MercadoPagoDocumentType>> getDocumentsType() async {
     Response response = await get(
-        '$url/identification_types',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${Environment.ACCESS_TOKEN}'
-        },
+      '$url/identification_types',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Environment.ACCESS_TOKEN}'
+      },
     ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
       return [];
     }
 
-    List<MercadoPagoDocumentType> documents = MercadoPagoDocumentType.fromJsonList(response.body);
+    List<MercadoPagoDocumentType> documents =
+        MercadoPagoDocumentType.fromJsonList(response.body);
 
     return documents;
   }
 
-  Future<MercadoPagoPaymentMethodInstallments> getInstallments(String bin, double amount) async {
-    Response response = await get(
-        '$url/payment_methods/installments',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${Environment.ACCESS_TOKEN}'
-        },
-        query: {
-          'bin': bin,
-          'amount': '${amount}'
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+  Future<MercadoPagoPaymentMethodInstallments> getInstallments(
+      String bin, double amount) async {
+    Response response =
+        await get('$url/payment_methods/installments', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${Environment.ACCESS_TOKEN}'
+    }, query: {
+      'bin': bin,
+      'amount': '$amount'
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
-    print('RESPONSE: ${response}');
+    print('RESPONSE: $response');
     print('RESPONSE Status code: ${response.statusCode}');
     print('RESPONSE BODY: ${response.body}');
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
       return MercadoPagoPaymentMethodInstallments();
     }
 
@@ -60,7 +60,8 @@ class MercadoPagoProvider extends GetConnect {
       return MercadoPagoPaymentMethodInstallments();
     }
 
-    MercadoPagoPaymentMethodInstallments data = MercadoPagoPaymentMethodInstallments.fromJson(response.body[0]);
+    MercadoPagoPaymentMethodInstallments data =
+        MercadoPagoPaymentMethodInstallments.fromJson(response.body[0]);
 
     return data;
   }
@@ -77,7 +78,6 @@ class MercadoPagoProvider extends GetConnect {
     @required int? installments,
     @required Order? order,
   }) async {
-
     Response response = await post(
       '${Environment.API_URL}api/payments/create',
       {
@@ -117,24 +117,20 @@ class MercadoPagoProvider extends GetConnect {
     String? documentId,
   }) async {
     Response response = await post(
-        '$url/card_tokens?public_key=${Environment.PUBLIC_KEY}',
-        {
-          'security_code': cvv,
-          'expiration_year': expirationYear,
-          'expiration_month': expirationMonth,
-          'card_number': cardNumber,
-          'cardholder': {
-            'name': cardHolderName,
-            'identification': {
-              'number': documentNumber,
-              'type': documentId
-            }
-          },
+      '$url/card_tokens?public_key=${Environment.PUBLIC_KEY}',
+      {
+        'security_code': cvv,
+        'expiration_year': expirationYear,
+        'expiration_month': expirationMonth,
+        'card_number': cardNumber,
+        'cardholder': {
+          'name': cardHolderName,
+          'identification': {'number': documentNumber, 'type': documentId}
         },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
     ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode != 201) {
@@ -142,7 +138,7 @@ class MercadoPagoProvider extends GetConnect {
       return MercadoPagoCardToken();
     }
 
-    print('RESPONSE: ${response}');
+    print('RESPONSE: $response');
     print('RESPONSE Status code: ${response.statusCode}');
     print('RESPONSE BODY: ${response.body}');
 
@@ -150,5 +146,4 @@ class MercadoPagoProvider extends GetConnect {
 
     return res;
   }
-
 }

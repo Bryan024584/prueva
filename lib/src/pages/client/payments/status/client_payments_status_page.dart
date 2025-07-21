@@ -6,6 +6,8 @@ class ClientPaymentsStatusPage extends StatelessWidget {
 
   ClientPaymentsStatusController con = Get.put(ClientPaymentsStatusController());
 
+  ClientPaymentsStatusPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,7 @@ class ClientPaymentsStatusPage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.45,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -45,7 +47,7 @@ class ClientPaymentsStatusPage extends StatelessWidget {
         children: [
           _textTransactionDetail(),
           _textTransactionStatus(),
-          Spacer(),
+          const Spacer(),
           _buttonCreate(context)
         ],
       ),
@@ -55,15 +57,15 @@ class ClientPaymentsStatusPage extends StatelessWidget {
   Widget _buttonCreate(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: ElevatedButton(
           onPressed: () {
             con.finishShopping();
           },
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'FINALIZAR COMPRA',
             style: TextStyle(
                 color: Colors.black
@@ -77,14 +79,14 @@ class ClientPaymentsStatusPage extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 15),
+        margin: const EdgeInsets.only(top: 15),
         alignment: Alignment.topCenter,
         child: Column(
           children: [
             con.mercadoPagoPayment.status == 'approved'
-            ? Icon(Icons.check_circle, size: 100, color: Colors.white)
-            : Icon(Icons.cancel, size: 100, color: Colors.red),
-            Text(
+            ? const Icon(Icons.check_circle, size: 100, color: Colors.white)
+            : const Icon(Icons.cancel, size: 100, color: Colors.red),
+            const Text(
               'TRANSACCION TERMINADA',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -99,12 +101,12 @@ class ClientPaymentsStatusPage extends StatelessWidget {
 
   Widget _textTransactionDetail() {
     return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 30, left: 25, right: 25),
+      margin: const EdgeInsets.only(top: 40, bottom: 30, left: 25, right: 25),
       child: Text(
         con.mercadoPagoPayment.status == 'approved'
         ? 'Tu orden fue procesada exitosamente usando (${con.mercadoPagoPayment.paymentMethodId?.toUpperCase()} **** ${con.mercadoPagoPayment.card?.lastFourDigits})'
         : 'Tu pago fue rechazado',
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
         ),
       ),
@@ -113,12 +115,12 @@ class ClientPaymentsStatusPage extends StatelessWidget {
 
   Widget _textTransactionStatus() {
     return Container(
-      margin: EdgeInsets.only(bottom: 30, left: 25, right: 25),
+      margin: const EdgeInsets.only(bottom: 30, left: 25, right: 25),
       child: Text(
         con.mercadoPagoPayment.status == 'approved'
         ? 'Mira el estado de tu compra en la seccion de mis pedidos'
         : con.errorMessage.value,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
         ),
       ),

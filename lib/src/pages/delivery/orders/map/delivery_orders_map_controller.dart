@@ -16,8 +16,7 @@ import 'package:udemy_flutter_delivery/src/models/response_api.dart';
 import 'package:udemy_flutter_delivery/src/providers/orders_provider.dart';
 
 class DeliveryOrdersMapController extends GetxController {
-
-  Socket socket = io('${Environment.API_URL}orders/delivery', <String, dynamic> {
+  Socket socket = io('${Environment.API_URL}orders/delivery', <String, dynamic>{
     'transports': ['websocket'],
     'autoConnect': false
   });
@@ -25,10 +24,8 @@ class DeliveryOrdersMapController extends GetxController {
   Order order = Order.fromJson(Get.arguments['order'] ?? {});
   OrdersProvider ordersProvider = OrdersProvider();
 
-  CameraPosition initialPosition = CameraPosition(
-      target: LatLng(1.2004567, -77.2787444),
-      zoom: 14
-  );
+  CameraPosition initialPosition =
+      const CameraPosition(target: LatLng(1.2004567, -77.2787444), zoom: 14);
 
   LatLng? addressLatLng;
   var addressName = ''.obs;
@@ -56,24 +53,17 @@ class DeliveryOrdersMapController extends GetxController {
   }
 
   void isCloseToDeliveryPosition() {
-
     if (position != null) {
-      distanceBetween = Geolocator.distanceBetween(
-          position!.latitude,
-          position!.longitude,
-          order.address!.lat!,
-          order.address!.lng!
-      );
+      distanceBetween = Geolocator.distanceBetween(position!.latitude,
+          position!.longitude, order.address!.lat!, order.address!.lng!);
 
-      print('distanceBetween ${distanceBetween}');
+      print('distanceBetween $distanceBetween');
 
       if (distanceBetween <= 200 && isClose == false) {
         isClose = true;
         update();
       }
-
     }
-
   }
 
   void connectAndListen() {
@@ -100,7 +90,6 @@ class DeliveryOrdersMapController extends GetxController {
   }
 
   Future setLocationDraggableInfo() async {
-
     double lat = initialPosition.target.latitude;
     double lng = initialPosition.target.longitude;
 
@@ -114,35 +103,27 @@ class DeliveryOrdersMapController extends GetxController {
       String country = address[0].country ?? '';
       addressName.value = '$direction #$street, $city, $department';
       addressLatLng = LatLng(lat, lng);
-      print('LAT Y LNG: ${addressLatLng?.latitude ?? 0} ${addressLatLng?.longitude ?? 0}');
+      print(
+          'LAT Y LNG: ${addressLatLng?.latitude ?? 0} ${addressLatLng?.longitude ?? 0}');
     }
-
   }
 
   Future<BitmapDescriptor> createMarkerFromAssets(String path) async {
-    ImageConfiguration configuration = ImageConfiguration();
-    BitmapDescriptor descriptor = await BitmapDescriptor.fromAssetImage(
-        configuration, path
-    );
+    ImageConfiguration configuration = const ImageConfiguration();
+    BitmapDescriptor descriptor =
+        await BitmapDescriptor.fromAssetImage(configuration, path);
 
     return descriptor;
   }
 
-  void addMarker(
-    String markerId,
-    double lat,
-    double lng,
-    String title,
-    String content,
-    BitmapDescriptor iconMarker
-  ) {
+  void addMarker(String markerId, double lat, double lng, String title,
+      String content, BitmapDescriptor iconMarker) {
     MarkerId id = MarkerId(markerId);
     Marker marker = Marker(
         markerId: id,
         icon: iconMarker,
         position: LatLng(lat, lng),
-        infoWindow: InfoWindow(title: title, snippet: content)
-    );
+        infoWindow: InfoWindow(title: title, snippet: content));
 
     markers[id] = marker;
 
@@ -150,15 +131,15 @@ class DeliveryOrdersMapController extends GetxController {
   }
 
   void checkGPS() async {
-    deliveryMarker = await createMarkerFromAssets('assets/img/delivery_little.png');
+    deliveryMarker =
+        await createMarkerFromAssets('assets/img/delivery_little.png');
     homeMarker = await createMarkerFromAssets('assets/img/home.png');
 
     bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (isLocationEnabled == true) {
       updateLocation();
-    }
-    else {
+    } else {
       bool locationGPS = await location.Location().requestService();
       if (locationGPS == true) {
         updateLocation();
@@ -170,21 +151,17 @@ class DeliveryOrdersMapController extends GetxController {
     PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
     PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
     PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-        Environment.API_KEY_MAPS,
-        pointFrom,
-        pointTo
-    );
+        Environment.API_KEY_MAPS, pointFrom, pointTo);
 
     for (PointLatLng point in result.points) {
       points.add(LatLng(point.latitude, point.longitude));
     }
 
     Polyline polyline = Polyline(
-        polylineId: PolylineId('poly'),
+        polylineId: const PolylineId('poly'),
         color: Colors.amber,
         points: points,
-        width: 5
-    );
+        width: 5);
 
     polylines.add(polyline);
     update();
@@ -193,24 +170,25 @@ class DeliveryOrdersMapController extends GetxController {
   void updateToDelivered() async {
     if (distanceBetween <= 200) {
       ResponseApi responseApi = await ordersProvider.updateToDelivered(order);
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+      Fluttertoast.showToast(
+          msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
       if (responseApi.success == true) {
         emitToDelivered();
         Get.offNamedUntil('/delivery/home', (route) => false);
       }
-    }
-    else {
-      Get.snackbar('Operacion no permitida', 'Debes estar mas cerca a la posicion de entrega del pedidio');
+    } else {
+      Get.snackbar('Operacion no permitida',
+          'Debes estar mas cerca a la posicion de entrega del pedidio');
     }
   }
 
-
   void updateLocation() async {
-    try{
+    try {
       await _determinePosition();
       position = await Geolocator.getLastKnownPosition(); // LAT Y LNG (ACTUAL)
       saveLocation();
-      animateCameraPosition(position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
+      animateCameraPosition(
+          position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
 
       addMarker(
           'delivery',
@@ -218,8 +196,7 @@ class DeliveryOrdersMapController extends GetxController {
           position?.longitude ?? -77.2787444,
           'Tu posicion',
           '',
-          deliveryMarker!
-      );
+          deliveryMarker!);
 
       addMarker(
           'home',
@@ -227,22 +204,21 @@ class DeliveryOrdersMapController extends GetxController {
           order.address?.lng ?? -77.2787444,
           'Lugar de entrega',
           '',
-          homeMarker!
-      );
+          homeMarker!);
 
       LatLng from = LatLng(position!.latitude, position!.longitude);
-      LatLng to = LatLng(order.address?.lat ?? 1.2004567, order.address?.lng ?? -77.2787444);
+      LatLng to = LatLng(
+          order.address?.lat ?? 1.2004567, order.address?.lng ?? -77.2787444);
 
       setPolylines(from, to);
 
-      LocationSettings locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.best,
-        distanceFilter: 1
-      );
+      LocationSettings locationSettings = const LocationSettings(
+          accuracy: LocationAccuracy.best, distanceFilter: 1);
 
-      positionSubscribe = Geolocator.getPositionStream(
-          locationSettings: locationSettings
-      ).listen((Position pos ) { // POSICION EN TIEMPO REAL
+      positionSubscribe =
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position pos) {
+        // POSICION EN TIEMPO REAL
         position = pos;
         addMarker(
             'delivery',
@@ -250,19 +226,18 @@ class DeliveryOrdersMapController extends GetxController {
             position?.longitude ?? -77.2787444,
             'Tu posicion',
             '',
-            deliveryMarker!
-        );
-        animateCameraPosition(position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
+            deliveryMarker!);
+        animateCameraPosition(position?.latitude ?? 1.2004567,
+            position?.longitude ?? -77.2787444);
         emitPosition();
         isCloseToDeliveryPosition();
       });
-
-    } catch(e) {
-      print('Error: ${e}');
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
-  void callNumber() async{
+  void callNumber() async {
     String number = order.client?.phone ?? ''; //set the number here
     await FlutterPhoneDirectCaller.callNumber(number);
   }
@@ -284,12 +259,7 @@ class DeliveryOrdersMapController extends GetxController {
   Future animateCameraPosition(double lat, double lng) async {
     GoogleMapController controller = await mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-          target: LatLng(lat, lng),
-          zoom: 14,
-          bearing: 0
-      )
-    ));
+        CameraPosition(target: LatLng(lat, lng), zoom: 14, bearing: 0)));
   }
 
   Future<Position> _determinePosition() async {
@@ -298,7 +268,6 @@ class DeliveryOrdersMapController extends GetxController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-
       return Future.error('Location services are disabled.');
     }
 
@@ -315,15 +284,14 @@ class DeliveryOrdersMapController extends GetxController {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-
     return await Geolocator.getCurrentPosition();
   }
 
   void onMapCreate(GoogleMapController controller) {
-    controller.setMapStyle('[{"elementType":"geometry","stylers":[{"color":"#212121"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#212121"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#757575"}]},{"featureType":"administrative.country","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"administrative.land_parcel","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#181818"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"color":"#1b1b1b"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#2c2c2c"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#8a8a8a"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#373737"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#3c3c3c"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#3d3d3d"}]}]');
+    controller.setMapStyle(
+        '[{"elementType":"geometry","stylers":[{"color":"#212121"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#212121"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#757575"}]},{"featureType":"administrative.country","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"administrative.land_parcel","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#181818"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"color":"#1b1b1b"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#2c2c2c"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#8a8a8a"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#373737"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#3c3c3c"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#3d3d3d"}]}]');
     mapController.complete(controller);
   }
-
 
   @override
   void onClose() {

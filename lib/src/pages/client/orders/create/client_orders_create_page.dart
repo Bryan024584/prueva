@@ -8,26 +8,28 @@ class ClientOrdersCreatePage extends StatelessWidget {
 
   ClientOrdersCreateController con = Get.put(ClientOrdersCreateController());
 
+  ClientOrdersCreatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx (() => Scaffold(
       bottomNavigationBar: Container(
-        color: Color.fromRGBO(245, 245, 245, 1),
+        color: const Color.fromRGBO(245, 245, 245, 1),
         height: 100,
         child: _totalToPay(context),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
             color: Colors.black
         ),
-        title: Text(
+        title: const Text(
           'Mi Orden',
           style: TextStyle(
               color: Colors.black
           ),
         ),
       ),
-      body: con.selectedProducts.length > 0
+      body: con.selectedProducts.isNotEmpty
       ? ListView(
         children: con.selectedProducts.map((Product product) {
           return _cardProduct(product);
@@ -45,26 +47,26 @@ class ClientOrdersCreatePage extends StatelessWidget {
       children: [
         Divider(height: 1, color: Colors.grey[300]),
         Container(
-          margin: EdgeInsets.only(left: 20, top: 25),
+          margin: const EdgeInsets.only(left: 20, top: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                   'TOTAL: \$${con.total.value}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 17
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
 
                 child: ElevatedButton(
                     onPressed: () => con.goToAddressList(),
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15)
+                        padding: const EdgeInsets.all(15)
                     ),
-                    child: Text(
+                    child: const Text(
                       'CONFIRMAR ORDER',
                       style: TextStyle(
                           color: Colors.black
@@ -82,25 +84,25 @@ class ClientOrdersCreatePage extends StatelessWidget {
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
           _imageProduct(product),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 product.name ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               _buttonsAddOrRemove(product)
             ],
           ),
-          Spacer(),
+          const Spacer(),
           Column(
             children: [
               _textPrice(product),
@@ -115,7 +117,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
   Widget _iconDelete(Product product) {
     return IconButton(
         onPressed: () => con.deleteItem(product),
-        icon: Icon(
+        icon: const Icon(
           Icons.delete,
           color: Colors.red,
         )
@@ -124,10 +126,10 @@ class ClientOrdersCreatePage extends StatelessWidget {
 
   Widget _textPrice(Product product) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 10),
       child: Text(
         '\$${ product.price! * product.quantity!}',
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold
         ),
@@ -141,35 +143,35 @@ class ClientOrdersCreatePage extends StatelessWidget {
         GestureDetector(
           onTap: () => con.removeItem(product),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
               color: Colors.grey[200],
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8),
                 bottomLeft: Radius.circular(8),
               )
             ),
 
-            child: Text('-'),
+            child: const Text('-'),
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
           color: Colors.grey[200],
           child: Text('${product.quantity ?? 0}'),
         ),
         GestureDetector(
           onTap: () => con.addItem(product),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 )
             ),
-            child: Text('+'),
+            child: const Text('+'),
           ),
         ),
       ],
@@ -177,7 +179,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
   }
 
   Widget _imageProduct(Product product) {
-    return Container(
+    return SizedBox(
       height: 70,
       width: 70,
       // padding: EdgeInsets.all(2),
@@ -186,10 +188,10 @@ class ClientOrdersCreatePage extends StatelessWidget {
         child: FadeInImage(
           image: product.image1 != null
               ? NetworkImage(product.image1!)
-              : AssetImage('assets/img/no-image.png') as ImageProvider,
+              : const AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
-          fadeInDuration: Duration(milliseconds: 50),
-          placeholder:  AssetImage('assets/img/no-image.png'),
+          fadeInDuration: const Duration(milliseconds: 50),
+          placeholder:  const AssetImage('assets/img/no-image.png'),
         ),
       ),
     );

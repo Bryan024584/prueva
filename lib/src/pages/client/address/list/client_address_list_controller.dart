@@ -10,7 +10,6 @@ import 'package:udemy_flutter_delivery/src/providers/address_provider.dart';
 import 'package:udemy_flutter_delivery/src/providers/orders_provider.dart';
 
 class ClientAddressListController extends GetxController {
-
   List<Address> address = [];
   AddressProvider addressProvider = AddressProvider();
   OrdersProvider ordersProvider = OrdersProvider();
@@ -24,11 +23,13 @@ class ClientAddressListController extends GetxController {
 
   Future<List<Address>> getAddress() async {
     address = await addressProvider.findByUser(user.id ?? '');
-    print('Address ${address}');
-    Address a = Address.fromJson(GetStorage().read('address') ?? {}) ; // DIRECCION SELECCIONADA POR EL USUARIO
+    print('Address $address');
+    Address a = Address.fromJson(GetStorage().read('address') ??
+        {}); // DIRECCION SELECCIONADA POR EL USUARIO
     int index = address.indexWhere((ad) => ad.id == a.id);
 
-    if (index != -1) { // LA DIRECCION DE SESION COINCIDE CON UN DATOS DE LA LISTA DE DIRECCIONES
+    if (index != -1) {
+      // LA DIRECCION DE SESION COINCIDE CON UN DATOS DE LA LISTA DE DIRECCIONES
       radioValue.value = index;
     }
 
@@ -37,13 +38,11 @@ class ClientAddressListController extends GetxController {
 
   void createOrder() async {
     Get.toNamed('/client/payments/create');
-
-
   }
 
   void handleRadioValueChange(int? value) {
     radioValue.value = value!;
-    print('VALOR SELECCIONADO ${value}');
+    print('VALOR SELECCIONADO $value');
     GetStorage().write('address', address[value].toJson());
     update();
   }
@@ -51,5 +50,4 @@ class ClientAddressListController extends GetxController {
   void goToAddressCreate() {
     Get.toNamed('/client/address/create');
   }
-
 }

@@ -7,7 +7,6 @@ import 'package:udemy_flutter_delivery/src/providers/orders_provider.dart';
 import 'package:udemy_flutter_delivery/src/providers/users_provider.dart';
 
 class RestaurantOrdersDetailController extends GetxController {
-
   Order order = Order.fromJson(Get.arguments['order']);
 
   var total = 0.0.obs;
@@ -21,18 +20,19 @@ class RestaurantOrdersDetailController extends GetxController {
     print('Order: ${order.toJson()}');
     getDeliveryMen();
     getTotal();
-  } 
-  
+  }
+
   void updateOrder() async {
-    if (idDelivery.value != '') { // SI SELECCIONO EL DELIVERY
+    if (idDelivery.value != '') {
+      // SI SELECCIONO EL DELIVERY
       order.idDelivery = idDelivery.value;
       ResponseApi responseApi = await ordersProvider.updateToDispatched(order);
-      Fluttertoast.showToast(msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+      Fluttertoast.showToast(
+          msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
       if (responseApi.success == true) {
         Get.offNamedUntil('/restaurant/home', (route) => false);
       }
-    }
-    else {
+    } else {
       Get.snackbar('Peticion denegada', 'Debes asignar el repartidor');
     }
   }
@@ -45,9 +45,8 @@ class RestaurantOrdersDetailController extends GetxController {
 
   void getTotal() {
     total.value = 0.0;
-    order.products!.forEach((product) {
+    for (var product in order.products!) {
       total.value = total.value + (product.quantity! * product.price!);
-    });
+    }
   }
-
 }

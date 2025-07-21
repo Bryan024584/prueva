@@ -11,7 +11,6 @@ import 'package:udemy_flutter_delivery/src/models/user.dart';
 import 'package:udemy_flutter_delivery/src/providers/users_provider.dart';
 
 class RegisterController extends GetxController {
-
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
@@ -32,11 +31,10 @@ class RegisterController extends GetxController {
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
 
-    print('Email ${email}');
-    print('Password ${password}');
+    print('Email $email');
+    print('Password $password');
 
     if (isValidForm(email, name, lastname, phone, password, confirmPassword)) {
-
       ProgressDialog progressDialog = ProgressDialog(context: context);
       progressDialog.show(max: 100, msg: 'Registrando datos...');
 
@@ -50,18 +48,16 @@ class RegisterController extends GetxController {
 
       Stream stream = await usersProvider.createWithImage(user, imageFile!);
       stream.listen((res) {
-
         progressDialog.close();
         ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
         if (responseApi.success == true) {
-          GetStorage().write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
+          GetStorage()
+              .write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
           goToHomePage();
-        }
-        else {
+        } else {
           Get.snackbar('Registro fallido', responseApi.message ?? '');
         }
-
       });
     }
   }
@@ -70,15 +66,8 @@ class RegisterController extends GetxController {
     Get.offNamedUntil('/client/home', (route) => false);
   }
 
-  bool isValidForm(
-      String email,
-      String name,
-      String lastname,
-      String phone,
-      String password,
-      String confirmPassword
-  ) {
-
+  bool isValidForm(String email, String name, String lastname, String phone,
+      String password, String confirmPassword) {
     if (email.isEmpty) {
       Get.snackbar('Formulario no valido', 'Debes ingresar el email');
       return false;
@@ -100,7 +89,8 @@ class RegisterController extends GetxController {
     }
 
     if (phone.isEmpty) {
-      Get.snackbar('Formulario no valido', 'Debes ingresar tu numero telefonico');
+      Get.snackbar(
+          'Formulario no valido', 'Debes ingresar tu numero telefonico');
       return false;
     }
 
@@ -110,7 +100,8 @@ class RegisterController extends GetxController {
     }
 
     if (confirmPassword.isEmpty) {
-      Get.snackbar('Formulario no valido', 'Debes ingresar la confirmacion del password');
+      Get.snackbar('Formulario no valido',
+          'Debes ingresar la confirmacion del password');
       return false;
     }
 
@@ -120,7 +111,8 @@ class RegisterController extends GetxController {
     }
 
     if (imageFile == null) {
-      Get.snackbar('Formulario no valido', 'Debes seleccionar una imagen de perfil');
+      Get.snackbar(
+          'Formulario no valido', 'Debes seleccionar una imagen de perfil');
       return false;
     }
 
@@ -141,37 +133,29 @@ class RegisterController extends GetxController {
           Get.back();
           selectImage(ImageSource.gallery);
         },
-        child: Text(
+        child: const Text(
           'GALERIA',
-          style: TextStyle(
-            color: Colors.black
-          ),
-        )
-    );
+          style: TextStyle(color: Colors.black),
+        ));
     Widget cameraButton = ElevatedButton(
         onPressed: () {
           Get.back();
           selectImage(ImageSource.camera);
         },
-        child: Text(
+        child: const Text(
           'CAMARA',
-          style: TextStyle(
-              color: Colors.black
-          ),
-        )
-    );
+          style: TextStyle(color: Colors.black),
+        ));
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text('Selecciona una opcion'),
-      actions: [
-        galleryButton,
-        cameraButton
-      ],
+      title: const Text('Selecciona una opcion'),
+      actions: [galleryButton, cameraButton],
     );
 
-    showDialog(context: context, builder: (BuildContext context) {
-      return alertDialog;
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
   }
-
 }

@@ -13,7 +13,6 @@ import 'package:udemy_flutter_delivery/src/providers/categories_provider.dart';
 import 'package:udemy_flutter_delivery/src/providers/products_provider.dart';
 
 class RestaurantProductsCreateController extends GetxController {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -39,23 +38,21 @@ class RestaurantProductsCreateController extends GetxController {
   }
 
   void createProduct(BuildContext context) async {
-
     String name = nameController.text;
     String description = descriptionController.text;
     String price = priceController.text;
-    print('NAME: ${name}');
-    print('DESCRIPTION: ${description}');
-    print('PRICE: ${price}');
-    print('ID CATEGORY: ${idCategory}');
+    print('NAME: $name');
+    print('DESCRIPTION: $description');
+    print('PRICE: $price');
+    print('ID CATEGORY: $idCategory');
     ProgressDialog progressDialog = ProgressDialog(context: context);
 
     if (isValidForm(name, description, price)) {
       Product product = Product(
-        name: name,
-        description: description,
-        price: double.parse(price),
-        idCategory: idCategory.value
-      );
+          name: name,
+          description: description,
+          price: double.parse(price),
+          idCategory: idCategory.value);
       progressDialog.show(max: 100, msg: 'Espere un momento...');
 
       List<File> images = [];
@@ -74,7 +71,6 @@ class RestaurantProductsCreateController extends GetxController {
         }
       });
     }
-
   }
 
   bool isValidForm(String name, String description, String price) {
@@ -83,7 +79,8 @@ class RestaurantProductsCreateController extends GetxController {
       return false;
     }
     if (description.isEmpty) {
-      Get.snackbar('Fomulario no valido', 'Ingresa la descripcion del producto');
+      Get.snackbar(
+          'Fomulario no valido', 'Ingresa la descripcion del producto');
       return false;
     }
     if (price.isEmpty) {
@@ -91,20 +88,24 @@ class RestaurantProductsCreateController extends GetxController {
       return false;
     }
     if (idCategory.value == '') {
-      Get.snackbar('Fomulario no valido', 'Debes seleccionar la categoria del producto');
+      Get.snackbar(
+          'Fomulario no valido', 'Debes seleccionar la categoria del producto');
       return false;
     }
 
     if (imageFile1 == null) {
-      Get.snackbar('Fomulario no valido', 'Selecciona la imagen numero 1 del producto');
+      Get.snackbar(
+          'Fomulario no valido', 'Selecciona la imagen numero 1 del producto');
       return false;
     }
     if (imageFile2 == null) {
-      Get.snackbar('Fomulario no valido', 'Selecciona la imagen numero 2 del producto');
+      Get.snackbar(
+          'Fomulario no valido', 'Selecciona la imagen numero 2 del producto');
       return false;
     }
     if (imageFile3 == null) {
-      Get.snackbar('Fomulario no valido', 'Selecciona la imagen numero 3 del producto');
+      Get.snackbar(
+          'Fomulario no valido', 'Selecciona la imagen numero 3 del producto');
       return false;
     }
 
@@ -114,14 +115,11 @@ class RestaurantProductsCreateController extends GetxController {
   Future selectImage(ImageSource imageSource, int numberFile) async {
     XFile? image = await picker.pickImage(source: imageSource);
     if (image != null) {
-
       if (numberFile == 1) {
         imageFile1 = File(image.path);
-      }
-      else if (numberFile == 2) {
+      } else if (numberFile == 2) {
         imageFile2 = File(image.path);
-      }
-      else if (numberFile == 3) {
+      } else if (numberFile == 3) {
         imageFile3 = File(image.path);
       }
 
@@ -135,37 +133,30 @@ class RestaurantProductsCreateController extends GetxController {
           Get.back();
           selectImage(ImageSource.gallery, numberFile);
         },
-        child: Text(
+        child: const Text(
           'GALERIA',
-          style: TextStyle(
-              color: Colors.black
-          ),
-        )
-    );
+          style: TextStyle(color: Colors.black),
+        ));
     Widget cameraButton = ElevatedButton(
         onPressed: () {
           Get.back();
           selectImage(ImageSource.camera, numberFile);
         },
-        child: Text(
+        child: const Text(
           'CAMARA',
-          style: TextStyle(
-              color: Colors.black
-          ),
-        )
-    );
+          style: TextStyle(color: Colors.black),
+        ));
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text('Selecciona una opcion'),
-      actions: [
-        galleryButton,
-        cameraButton
-      ],
+      title: const Text('Selecciona una opcion'),
+      actions: [galleryButton, cameraButton],
     );
 
-    showDialog(context: context, builder: (BuildContext context) {
-      return alertDialog;
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
   }
 
   void clearForm() {
@@ -178,5 +169,4 @@ class RestaurantProductsCreateController extends GetxController {
     idCategory.value = '';
     update();
   }
-
 }

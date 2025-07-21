@@ -4,7 +4,7 @@ class NoDataWidget extends StatelessWidget {
 
   String text = '';
 
-  NoDataWidget({this.text = ''});
+  NoDataWidget({super.key, this.text = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,10 @@ class NoDataWidget extends StatelessWidget {
               height: 150,
               width: 150,
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold
             ),

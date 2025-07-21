@@ -50,7 +50,7 @@ dependencies:
   flutter_polyline_points: ^2.1.0
   flutter_phone_direct_caller: ^2.1.0
   socket_io_client: ^3.1.2
-  flutter_credit_card: ^4.1.0
+  flutter_credit_card: ^3.0.1
   firebase_messaging: ^15.2.9
   flutter_local_notifications: ^19.3.1
   firebase_core: ^3.15.1

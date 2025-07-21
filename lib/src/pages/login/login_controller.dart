@@ -7,7 +7,6 @@ import 'package:udemy_flutter_delivery/src/models/user.dart';
 import 'package:udemy_flutter_delivery/src/providers/users_provider.dart';
 
 class LoginController extends GetxController {
-
   User user = User.fromJson(GetStorage().read('user') ?? {});
 
   TextEditingController emailController = TextEditingController();
@@ -23,30 +22,28 @@ class LoginController extends GetxController {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    print('Email ${email}');
-    print('Password ${password}');
+    print('Email $email');
+    print('Password $password');
 
     if (isValidForm(email, password)) {
-
       ResponseApi responseApi = await usersProvider.login(email, password);
 
       print('Response Api: ${responseApi.toJson()}');
 
       if (responseApi.success == true) {
-        GetStorage().write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
+        GetStorage()
+            .write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
         User myUser = User.fromJson(GetStorage().read('user') ?? {});
 
         print('Roles length: ${myUser.roles!.length}');
 
         if (myUser.roles!.length > 1) {
           goToRolesPage();
-        }
-        else { // SOLO UN ROL
+        } else {
+          // SOLO UN ROL
           goToClientHomePage();
         }
-
-      }
-      else {
+      } else {
         Get.snackbar('Login fallido', responseApi.message ?? '');
       }
     }
@@ -61,7 +58,6 @@ class LoginController extends GetxController {
   }
 
   bool isValidForm(String email, String password) {
-
     if (email.isEmpty) {
       Get.snackbar('Formulario no valido', 'Debes ingresar el email');
       return false;
@@ -79,5 +75,4 @@ class LoginController extends GetxController {
 
     return true;
   }
-
 }

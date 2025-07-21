@@ -9,6 +9,8 @@ class RestaurantOrdersListPage extends StatelessWidget {
 
   RestaurantOrdersListController con = Get.put(RestaurantOrdersListController());
 
+  RestaurantOrdersListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -16,7 +18,7 @@ class RestaurantOrdersListPage extends StatelessWidget {
       length: con.status.length,
       child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(50),
+            preferredSize: const Size.fromHeight(50),
             child: AppBar(
               bottom: TabBar(
                 isScrollable: true,
@@ -37,7 +39,7 @@ class RestaurantOrdersListPage extends StatelessWidget {
                   future: con.getOrders(status),
                   builder: (context, AsyncSnapshot<List<Order>> snapshot) {
                     if (snapshot.hasData) {
-                      if (snapshot.data!.length > 0) {
+                      if (snapshot.data!.isNotEmpty) {
                         return ListView.builder(
                             itemCount: snapshot.data?.length ?? 0,
                             itemBuilder: (_, index) {
@@ -65,7 +67,7 @@ class RestaurantOrdersListPage extends StatelessWidget {
       onTap: () => con.goToOrderDetail(order),
       child: Container(
         height: 150,
-        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: Card(
           elevation: 3.0,
           shape: RoundedRectangleBorder(
@@ -76,7 +78,7 @@ class RestaurantOrdersListPage extends StatelessWidget {
               Container(
                 height: 30,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
@@ -84,11 +86,11 @@ class RestaurantOrdersListPage extends StatelessWidget {
                   )
                 ),
                 child: Container(
-                  margin: EdgeInsets.only(top: 5),
+                  margin: const EdgeInsets.only(top: 5),
                   child: Text(
                     'Order #${order.id}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                       color: Colors.amber
@@ -97,25 +99,25 @@ class RestaurantOrdersListPage extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+                margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 5),
+                        margin: const EdgeInsets.only(top: 5),
                         alignment: Alignment.centerLeft,
                         child: Text('Pedido: ${ RelativeTimeUtil.getRelativeTime(order.timestamp ?? 0)}')
                     ),
                     Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(top: 5),
+                        margin: const EdgeInsets.only(top: 5),
                         alignment: Alignment.centerLeft,
                         child: Text('Cliente: ${order.client?.name ?? ''} ${order.client?.lastname ?? ''}'),
                     ),
                     Container(
                       width: double.infinity,
-                      margin: EdgeInsets.only(top: 5),
+                      margin: const EdgeInsets.only(top: 5),
                       alignment: Alignment.centerLeft,
                       child: Text('Entregar en: ${order.address?.address ?? ''}'),
                     ),

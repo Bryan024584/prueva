@@ -10,21 +10,19 @@ import 'package:udemy_flutter_delivery/src/models/user.dart';
 import 'package:path/path.dart';
 
 class ProductsProvider extends GetConnect {
-  String url = Environment.API_URL + 'api/products';
+  String url = '${Environment.API_URL}api/products';
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<List<Product>> findByCategory(String idCategory) async {
-    Response response = await get(
-        '$url/findByCategory/$idCategory',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+    Response response = await get('$url/findByCategory/$idCategory', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
       return [];
     }
 
@@ -33,17 +31,17 @@ class ProductsProvider extends GetConnect {
     return products;
   }
 
-  Future<List<Product>> findByNameAndCategory(String idCategory, String name) async {
-    Response response = await get(
-        '$url/findByNameAndCategory/$idCategory/$name',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+  Future<List<Product>> findByNameAndCategory(
+      String idCategory, String name) async {
+    Response response =
+        await get('$url/findByNameAndCategory/$idCategory/$name', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
       return [];
     }
 
@@ -62,12 +60,10 @@ class ProductsProvider extends GetConnect {
           'image',
           http.ByteStream(images[i].openRead().cast()),
           await images[i].length(),
-          filename: basename(images[i].path)
-      ));
+          filename: basename(images[i].path)));
     }
     request.fields['product'] = json.encode(product);
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
-
 }

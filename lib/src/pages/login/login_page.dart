@@ -6,10 +6,12 @@ class LoginPage extends StatelessWidget {
 
   LoginController con = Get.put(LoginController());
 
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 50,
         child: _textDontHaveAccount(),
       ),
@@ -37,7 +39,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _textAppName() {
-    return Text(
+    return const Text(
       'DELIVERY MYSQL',
       style: TextStyle(
         fontSize: 20,
@@ -51,7 +53,7 @@ class LoginPage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.45,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.35, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -76,11 +78,11 @@ class LoginPage extends StatelessWidget {
 
   Widget _textFieldEmail() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Correo electronico',
           prefixIcon: Icon(Icons.email)
         ),
@@ -90,12 +92,12 @@ class LoginPage extends StatelessWidget {
 
   Widget _textFieldPassword() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.passwordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Contraseña',
           prefixIcon: Icon(Icons.lock)
         ),
@@ -106,13 +108,13 @@ class LoginPage extends StatelessWidget {
   Widget _buttonLogin() {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
           onPressed: () => con.login(),
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 15)
+            padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'LOGIN',
             style: TextStyle(
               color: Colors.black
@@ -124,8 +126,8 @@ class LoginPage extends StatelessWidget {
 
   Widget _textYourInfo() {
     return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 45),
-      child: Text(
+      margin: const EdgeInsets.only(top: 40, bottom: 45),
+      child: const Text(
         'INGRESA ESTA INFORMACION',
         style: TextStyle(
           color: Colors.black,
@@ -138,17 +140,17 @@ class LoginPage extends StatelessWidget {
     return Row( // UBICAR ELEMENTOS UNO AL LADO DEL OTRO (HORIZONTAL)
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           '¿No tienes cuenta?',
           style: TextStyle(
             color: Colors.black,
             fontSize: 17
           ),
         ),
-        SizedBox(width: 7),
+        const SizedBox(width: 7),
         GestureDetector(
           onTap: () => con.goToRegisterPage(),
-          child: Text(
+          child: const Text(
               'Registrate Aqui',
               style: TextStyle(
                   color: Colors.amber,
@@ -165,7 +167,7 @@ class LoginPage extends StatelessWidget {
   Widget _imageCover() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 20, bottom: 15),
+        margin: const EdgeInsets.only(top: 20, bottom: 15),
         alignment: Alignment.center,
         child: Image.asset(
           'assets/img/delivery.png',

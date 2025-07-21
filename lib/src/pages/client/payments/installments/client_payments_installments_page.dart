@@ -7,19 +7,21 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
 
   ClientPaymentsInstallmentsController con = Get.put(ClientPaymentsInstallmentsController());
 
+  ClientPaymentsInstallmentsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(
-        color: Color.fromRGBO(245, 245, 245, 1),
+        color: const Color.fromRGBO(245, 245, 245, 1),
         height: 100,
         child: _totalToPay(context),
       ),
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
             color: Colors.black
         ),
-        title: Text(
+        title: const Text(
           'Coutas',
           style: TextStyle(
               color: Colors.black
@@ -38,8 +40,8 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
 
   Widget _textDescription() {
     return Container(
-      margin: EdgeInsets.all(30),
-      child: Text(
+      margin: const EdgeInsets.all(30),
+      child: const Text(
         'En cuantas coutas?',
         style: TextStyle(
           fontSize: 20,
@@ -51,19 +53,19 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
 
   Widget _dropDownWidget(List<MercadoPagoInstallment> installments) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
 
       child: DropdownButton(
         underline: Container(
           alignment: Alignment.centerRight,
-          child: Icon(
+          child: const Icon(
             Icons.arrow_drop_down_circle,
             color: Colors.amber,
           ),
         ),
         elevation: 3,
         isExpanded: true,
-        hint: Text(
+        hint: const Text(
           'Seleccionar numero de coutas',
           style: TextStyle(
               fontSize: 15
@@ -72,7 +74,7 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
         items: _dropDownItems(installments),
         value: con.installments.value == '' ? null : con.installments.value,
         onChanged: (option) {
-          print('Opcion seleccionada ${option}');
+          print('Opcion seleccionada $option');
           con.installments.value = option.toString();
         },
       ),
@@ -81,12 +83,12 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _dropDownItems(List<MercadoPagoInstallment> installments) {
     List<DropdownMenuItem<String>> list = [];
-    installments.forEach((installment) {
+    for (var installment in installments) {
       list.add(DropdownMenuItem(
-        child: Text('${installment.installments}'),
         value: '${installment.installments}',
+        child: Text('${installment.installments}'),
       ));
-    });
+    }
 
     return list;
   }
@@ -96,26 +98,26 @@ class ClientPaymentsInstallmentsPage extends StatelessWidget {
       children: [
         Divider(height: 1, color: Colors.grey[300]),
         Container(
-          margin: EdgeInsets.only(left: 20, top: 25),
+          margin: const EdgeInsets.only(left: 20, top: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'TOTAL: \$${con.total.value}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
 
                 child: ElevatedButton(
                     onPressed: () => con.createPayment(),
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15)
+                        padding: const EdgeInsets.all(15)
                     ),
-                    child: Text(
+                    child: const Text(
                       'CONFIRMAR PAGO',
                       style: TextStyle(
                           color: Colors.black

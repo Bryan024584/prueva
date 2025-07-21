@@ -8,6 +8,8 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   DeliveryOrdersMapController con = Get.put(DeliveryOrdersMapController());
 
+  DeliveryOrdersMapPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DeliveryOrdersMapController> (
@@ -15,7 +17,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       backgroundColor: Colors.grey[900],
       body: Stack(
         children: [
-          Container(
+          SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               child: _googleMaps()
           ),
@@ -29,7 +31,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
                     _iconCenterMyLocation(),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 _cardOrderInfo(context),
               ],
             ),
@@ -43,10 +45,10 @@ class DeliveryOrdersMapPage extends StatelessWidget {
   Widget _buttonBack() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20),
       child: IconButton(
         onPressed: () => Get.back(),
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back_ios,
           color: Colors.white,
           size: 30,
@@ -61,7 +63,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.grey[900],
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(20),
           topLeft: Radius.circular(20),
         ),
@@ -70,7 +72,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 4,
             blurRadius: 6,
-            offset: Offset(0, 3)
+            offset: const Offset(0, 3)
           )
         ]
       ),
@@ -86,7 +88,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
               'Direccion',
               Icons.location_on
           ),
-          Divider(color: Colors.grey, endIndent: 30, indent: 30),
+          const Divider(color: Colors.grey, endIndent: 30, indent: 30),
           _clientInfo(),
           _buttonAccept(context)
         ],
@@ -96,29 +98,29 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   Widget _clientInfo() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
       child: Row(
         children: [
           _imageClient(),
-          SizedBox(width: 15),
+          const SizedBox(width: 15),
           Text(
             '${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''}',
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold
             ),
             maxLines: 1,
           ),
-          Spacer(),
+          const Spacer(),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               color: Colors.grey[200]
             ),
             child: IconButton(
               onPressed: () => con.callNumber(),
-              icon: Icon(Icons.phone, color: Colors.black),
+              icon: const Icon(Icons.phone, color: Colors.black),
             ),
           )
         ],
@@ -127,7 +129,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
   }
 
   Widget _imageClient() {
-    return Container(
+    return SizedBox(
       height: 50,
       width: 50,
       // padding: EdgeInsets.all(2),
@@ -136,10 +138,10 @@ class DeliveryOrdersMapPage extends StatelessWidget {
         child: FadeInImage(
           image: con.order.client!.image != null
               ? NetworkImage(con.order.client!.image!)
-              : AssetImage('assets/img/no-image.png') as ImageProvider,
+              : const AssetImage('assets/img/no-image.png') as ImageProvider,
           fit: BoxFit.cover,
-          fadeInDuration: Duration(milliseconds: 50),
-          placeholder:  AssetImage('assets/img/no-image.png'),
+          fadeInDuration: const Duration(milliseconds: 50),
+          placeholder:  const AssetImage('assets/img/no-image.png'),
         ),
       ),
     );
@@ -147,18 +149,18 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   Widget _listTileAddress(String title, String subtitle, IconData iconData) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 13,
             color: Colors.white
           ),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white
           ),
         ),
@@ -172,13 +174,13 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       onTap: () => con.centerPosition(),
       child: Container(
         alignment: Alignment.centerRight,
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         child: Card(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           color: Colors.white,
           elevation: 4,
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Icon(
               Icons.location_searching,
               color: Colors.grey[600],
@@ -193,20 +195,20 @@ class DeliveryOrdersMapPage extends StatelessWidget {
   Widget _buttonAccept(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 30, right: 30),
+      margin: const EdgeInsets.only(left: 30, right: 30),
       child: ElevatedButton(
         onPressed: con.isClose == true ? () => con.updateToDelivered() : null,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15)
+          ),
+          padding: const EdgeInsets.all(15)
+        ),
         child: Text(
           'ENTREGAR PEDIDO',
           style: TextStyle(
             color: Colors.black
           ),
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15)
-          ),
-          padding: EdgeInsets.all(15)
         ),
 
       ),

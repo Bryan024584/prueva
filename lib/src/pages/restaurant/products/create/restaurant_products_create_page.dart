@@ -10,6 +10,8 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   RestaurantProductsCreateController con = Get.put(RestaurantProductsCreateController());
 
+  RestaurantProductsCreatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,7 @@ class RestaurantProductsCreatePage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.18, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -79,19 +81,19 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   Widget _dropDownCategories(List<Category> categories) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 50),
-      margin: EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      margin: const EdgeInsets.only(top: 15),
       child: DropdownButton(
         underline: Container(
           alignment: Alignment.centerRight,
-          child: Icon(
+          child: const Icon(
             Icons.arrow_drop_down_circle,
             color: Colors.amber,
           ),
         ),
         elevation: 3,
         isExpanded: true,
-        hint: Text(
+        hint: const Text(
           'Seleccionar categoria',
           style: TextStyle(
 
@@ -101,7 +103,7 @@ class RestaurantProductsCreatePage extends StatelessWidget {
         items: _dropDownItems(categories),
         value: con.idCategory.value == '' ? null : con.idCategory.value,
         onChanged: (option) {
-          print('Opcion seleccionada ${option}');
+          print('Opcion seleccionada $option');
           con.idCategory.value = option.toString();
         },
       ),
@@ -110,12 +112,12 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _dropDownItems(List<Category> categories) {
     List<DropdownMenuItem<String>> list = [];
-    categories.forEach((category) {
+    for (var category in categories) {
       list.add(DropdownMenuItem(
-          child: Text(category.name ?? ''),
           value: category.id,
+          child: Text(category.name ?? ''),
       ));
-    });
+    }
 
     return list;
   }
@@ -126,7 +128,7 @@ class RestaurantProductsCreatePage extends StatelessWidget {
       child: Card(
         elevation: 3,
         child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             height: 70,
             width: MediaQuery.of(context).size.width * 0.18,
             child:  imageFile != null
@@ -134,7 +136,7 @@ class RestaurantProductsCreatePage extends StatelessWidget {
               imageFile,
               fit: BoxFit.cover,
             )
-            : Image(
+            : const Image(
               image: AssetImage('assets/img/cover_image.png'),
             )
         ),
@@ -144,11 +146,11 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   Widget _textFieldName() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
         controller: con.nameController,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Nombre',
             prefixIcon: Icon(Icons.category)
         ),
@@ -158,11 +160,11 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   Widget _textFieldPrice() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
+      margin: const EdgeInsets.symmetric(horizontal: 30),
       child: TextField(
         controller: con.priceController,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Precio',
             prefixIcon: Icon(Icons.attach_money)
         ),
@@ -172,7 +174,7 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   Widget _textFieldDescription() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: TextField(
         controller: con.descriptionController,
         keyboardType: TextInputType.text,
@@ -180,8 +182,8 @@ class RestaurantProductsCreatePage extends StatelessWidget {
         decoration: InputDecoration(
             hintText: 'Descripcion',
             prefixIcon: Container(
-              margin: EdgeInsets.only(bottom: 40),
-              child: Icon(Icons.description)
+              margin: const EdgeInsets.only(bottom: 40),
+              child: const Icon(Icons.description)
             )
         ),
       ),
@@ -191,15 +193,15 @@ class RestaurantProductsCreatePage extends StatelessWidget {
   Widget _buttonCreate(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 30, right: 30, top: 18),
+      margin: const EdgeInsets.only(left: 30, right: 30, top: 18),
       child: ElevatedButton(
           onPressed: () {
             con.createProduct(context);
           },
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'CREAR PRODUCTO',
             style: TextStyle(
                 color: Colors.black
@@ -213,9 +215,9 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: const EdgeInsets.only(top: 25),
         alignment: Alignment.topCenter,
-        child: Text(
+        child: const Text(
           'NUEVO PRODUCTO',
           style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -228,8 +230,8 @@ class RestaurantProductsCreatePage extends StatelessWidget {
 
   Widget _textYourInfo() {
     return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 30),
-      child: Text(
+      margin: const EdgeInsets.only(top: 40, bottom: 30),
+      child: const Text(
         'INGRESA ESTA INFORMACION',
         style: TextStyle(
           color: Colors.black,

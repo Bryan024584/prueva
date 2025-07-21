@@ -6,6 +6,8 @@ class ClientAddressCreatePage extends StatelessWidget {
 
   ClientAddressCreateController con = Get.put(ClientAddressCreateController());
 
+  ClientAddressCreatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +25,10 @@ class ClientAddressCreatePage extends StatelessWidget {
   Widget _iconBack() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(left: 15),
+        margin: const EdgeInsets.only(left: 15),
         child: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(Icons.arrow_back_ios, size: 30,)
+            icon: const Icon(Icons.arrow_back_ios, size: 30,)
         ),
       ),
     );
@@ -44,7 +46,7 @@ class ClientAddressCreatePage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.45,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -61,7 +63,7 @@ class ClientAddressCreatePage extends StatelessWidget {
             _textFieldAddress(),
             _textFieldNeighborhood(),
             _textFieldRefPoint(context),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             _buttonCreate(context)
           ],
         ),
@@ -73,11 +75,11 @@ class ClientAddressCreatePage extends StatelessWidget {
 
   Widget _textFieldAddress() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.addressController,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Direccion',
             prefixIcon: Icon(Icons.location_on)
         ),
@@ -87,11 +89,11 @@ class ClientAddressCreatePage extends StatelessWidget {
 
   Widget _textFieldNeighborhood() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         controller: con.neighborhoodController,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Barrio',
             prefixIcon: Icon(Icons.location_city)
         ),
@@ -101,14 +103,14 @@ class ClientAddressCreatePage extends StatelessWidget {
 
   Widget _textFieldRefPoint(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
         onTap: () => con.openGoogleMaps(context),
         controller: con.refPointController,
         autofocus: false,
         focusNode: AlwaysDisabledFocusNode(),
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Punto de referencia',
             prefixIcon: Icon(Icons.map)
         ),
@@ -121,15 +123,15 @@ class ClientAddressCreatePage extends StatelessWidget {
   Widget _buttonCreate(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: ElevatedButton(
           onPressed: () {
             con.createAddress();
           },
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)
+              padding: const EdgeInsets.symmetric(vertical: 15)
           ),
-          child: Text(
+          child: const Text(
             'CREAR DIRECCION',
             style: TextStyle(
                 color: Colors.black
@@ -143,9 +145,9 @@ class ClientAddressCreatePage extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(top: 15),
+        margin: const EdgeInsets.only(top: 15),
         alignment: Alignment.topCenter,
-        child: Column(
+        child: const Column(
           children: [
             Icon(Icons.location_on, size: 100),
             Text(
@@ -163,8 +165,8 @@ class ClientAddressCreatePage extends StatelessWidget {
 
   Widget _textYourInfo() {
     return Container(
-      margin: EdgeInsets.only(top: 40, bottom: 30),
-      child: Text(
+      margin: const EdgeInsets.only(top: 40, bottom: 30),
+      child: const Text(
         'INGRESA ESTA INFORMACION',
         style: TextStyle(
           color: Colors.black,

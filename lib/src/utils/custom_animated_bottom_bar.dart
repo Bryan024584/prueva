@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 
 class CustomAnimatedBottomBar extends StatelessWidget {
 
-  CustomAnimatedBottomBar({
-    Key? key,
+  const CustomAnimatedBottomBar({
+    super.key,
     this.selectedIndex = 0,
     this.showElevation = true,
     this.iconSize = 24,
@@ -16,8 +16,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     required this.items,
     required this.onItemSelected,
     this.curve = Curves.linear,
-  }) : assert(items.length >= 2 && items.length <= 5),
-        super(key: key);
+  }) : assert(items.length >= 2 && items.length <= 5);
 
   final int selectedIndex;
   final double iconSize;
@@ -36,7 +35,7 @@ class CustomAnimatedBottomBar extends StatelessWidget {
     final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(50),
@@ -87,7 +86,7 @@ class _ItemWidget extends StatelessWidget {
   final Curve curve;
 
   const _ItemWidget({
-    Key? key,
+    super.key,
     required this.item,
     required this.isSelected,
     required this.backgroundColor,
@@ -95,7 +94,7 @@ class _ItemWidget extends StatelessWidget {
     required this.itemCornerRadius,
     required this.iconSize,
     this.curve = Curves.linear,
-  })  : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +113,10 @@ class _ItemWidget extends StatelessWidget {
         ),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             width: isSelected ? 130 : 50,
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -128,16 +127,14 @@ class _ItemWidget extends StatelessWidget {
                     size: iconSize,
                     color: isSelected
                         ? item.activeColor.withOpacity(1)
-                        : item.inactiveColor == null
-                        ? item.activeColor
-                        : item.inactiveColor,
+                        : item.inactiveColor ?? item.activeColor,
                   ),
                   child: item.icon,
                 ),
                 if (isSelected)
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: DefaultTextStyle.merge(
                         style: TextStyle(
                           color: item.activeColor,

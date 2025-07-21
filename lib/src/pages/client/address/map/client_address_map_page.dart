@@ -7,14 +7,16 @@ class ClientAddressMapPage extends StatelessWidget {
 
   ClientAddressMapController con = Get.put(ClientAddressMapController());
 
+  ClientAddressMapPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
             color: Colors.black
         ),
-        title: Text(
+        title: const Text(
           'Ubica tu direccion en el mapa',
           style: TextStyle(
               color: Colors.black
@@ -36,20 +38,20 @@ class ClientAddressMapPage extends StatelessWidget {
     return Container(
       alignment: Alignment.bottomCenter,
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: 30),
+      margin: const EdgeInsets.only(bottom: 30),
       child: ElevatedButton(
         onPressed: () => con.selectRefPoint(context),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30)
+          ),
+          padding: const EdgeInsets.all(15)
+        ),
         child: Text(
           'SELECCIONAR ESTE PUNTO',
           style: TextStyle(
             color: Colors.black
           ),
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30)
-          ),
-          padding: EdgeInsets.all(15)
         ),
 
       ),
@@ -60,17 +62,17 @@ class ClientAddressMapPage extends StatelessWidget {
     return Container(
       width: double.infinity,
       alignment: Alignment.topCenter,
-      margin: EdgeInsets.symmetric(vertical: 30),
+      margin: const EdgeInsets.symmetric(vertical: 30),
       child: Card(
         color: Colors.grey[800],
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20)
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             con.addressName.value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.bold
@@ -83,7 +85,7 @@ class ClientAddressMapPage extends StatelessWidget {
 
   Widget _iconMyLocation() {
     return Container(
-      margin: EdgeInsets.only(bottom: 40),
+      margin: const EdgeInsets.only(bottom: 40),
       child: Center(
         child: Image.asset(
             'assets/img/my_location_yellow.png',

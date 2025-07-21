@@ -4,7 +4,6 @@ import 'package:udemy_flutter_delivery/src/models/mercado_pago_payment_method.da
 import 'package:udemy_flutter_delivery/src/models/mercado_pago_security_code.dart';
 
 class MercadoPagoCreditCard {
-
   //IDENTIFICADOR DE LA TARJETA
   String? id;
 
@@ -62,48 +61,64 @@ class MercadoPagoCreditCard {
   static List<MercadoPagoCreditCard> fromJsonList(List<dynamic> jsonList) {
     List<MercadoPagoCreditCard> toList = [];
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       MercadoPagoCreditCard model = MercadoPagoCreditCard.fromJson(item);
       toList.add(model);
-    });
+    }
 
     return toList;
   }
 
-  MercadoPagoCreditCard.fromJson( Map<String, dynamic> json ) {
-    id                 = json['id'];
-    customerId         = json['customer_id'];
-    userId             = json['user_id'];
-    expirationMonth    = (json['expiration_month'] != null) ? int.parse(json['expiration_month'].toString()) : 0;
-    expirationYear     = (json['expiration_year'] != null) ? int.parse(json['expiration_year'].toString()) : 0;
-    firstSixDigits     = json['first_six_digits'];
-    lastFourDigits     = json['last_four_digits'];
+  MercadoPagoCreditCard.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    customerId = json['customer_id'];
+    userId = json['user_id'];
+    expirationMonth = (json['expiration_month'] != null)
+        ? int.parse(json['expiration_month'].toString())
+        : 0;
+    expirationYear = (json['expiration_year'] != null)
+        ? int.parse(json['expiration_year'].toString())
+        : 0;
+    firstSixDigits = json['first_six_digits'];
+    lastFourDigits = json['last_four_digits'];
 
-    paymentMethod      = (json['payment_method'] != null) ? MercadoPagoPaymentMethod.fromJson(json['payment_method']) : null;
-    securityCode       = (json['security_code'] != null) ? MercadoPagoSecurityCode.fromJson(json['security_code']) : null;
+    paymentMethod = (json['payment_method'] != null)
+        ? MercadoPagoPaymentMethod.fromJson(json['payment_method'])
+        : null;
+    securityCode = (json['security_code'] != null)
+        ? MercadoPagoSecurityCode.fromJson(json['security_code'])
+        : null;
 
-    issuer             = (json['issuer'] != null) ? MercadoPagoIssuer.fromJson(json['issuer']) : null;
+    issuer = (json['issuer'] != null)
+        ? MercadoPagoIssuer.fromJson(json['issuer'])
+        : null;
 
-    cardHolder         = (json['cardholder'] != null) ?  MercadoPagoCardHolder.fromJson(json['cardholder']) : null;
+    cardHolder = (json['cardholder'] != null)
+        ? MercadoPagoCardHolder.fromJson(json['cardholder'])
+        : null;
 
-    dateCreated        = json['date_created'] is String ? DateTime.parse(json['date_created']) : json['date_created'];
-    dateLastUpdate     = json['date_last_updated'] is String ? DateTime.parse(json['date_last_updated']) : json['date_last_updated'];
+    dateCreated = json['date_created'] is String
+        ? DateTime.parse(json['date_created'])
+        : json['date_created'];
+    dateLastUpdate = json['date_last_updated'] is String
+        ? DateTime.parse(json['date_last_updated'])
+        : json['date_last_updated'];
   }
 
-  Map<String, dynamic> toJson() =>
-      {
-        'id'                    : id,
-        'customer_id'           : customerId,
-        'user_id'               : userId,
-        'expiration_month'      : expirationMonth,
-        'expiration_year'       : expirationYear,
-        'first_six_digits'      : firstSixDigits,
-        'last_four_digits'      : lastFourDigits,
-        'payment_method'        : (paymentMethod != null) ? paymentMethod?.toJson() : null,
-        'security_code'         : (securityCode != null) ? securityCode?.toJson() : null,
-        'issuer'                : (issuer != null) ? issuer?.toJson() : null,
-        'cardholder'            : (cardHolder != null) ? cardHolder?.toJson() : null,
-        'date_created'          : dateCreated,
-        'date_laste_updated'    : dateLastUpdate
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'customer_id': customerId,
+        'user_id': userId,
+        'expiration_month': expirationMonth,
+        'expiration_year': expirationYear,
+        'first_six_digits': firstSixDigits,
+        'last_four_digits': lastFourDigits,
+        'payment_method':
+            (paymentMethod != null) ? paymentMethod?.toJson() : null,
+        'security_code': (securityCode != null) ? securityCode?.toJson() : null,
+        'issuer': (issuer != null) ? issuer?.toJson() : null,
+        'cardholder': (cardHolder != null) ? cardHolder?.toJson() : null,
+        'date_created': dateCreated,
+        'date_laste_updated': dateLastUpdate
       };
 }

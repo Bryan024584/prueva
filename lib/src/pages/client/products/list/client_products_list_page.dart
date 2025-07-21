@@ -14,6 +14,8 @@ class ClientProductsListPage extends StatelessWidget {
 
   ClientProductsListController con = Get.put(ClientProductsListController());
 
+  ClientProductsListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -21,10 +23,10 @@ class ClientProductsListPage extends StatelessWidget {
       length: con.categories.length,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(115),
+          preferredSize: const Size.fromHeight(115),
           child: AppBar(
             flexibleSpace: Container(
-              margin: EdgeInsets.only(top: 15),
+              margin: const EdgeInsets.only(top: 15),
               alignment: Alignment.topCenter,
               child: Wrap(
                 direction: Axis.horizontal,
@@ -54,7 +56,7 @@ class ClientProductsListPage extends StatelessWidget {
                 future: con.getProducts(category.id ?? '1', con.productName.value),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.length > 0) {
+                    if (snapshot.data!.isNotEmpty) {
                       return ListView.builder(
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (_, index) {
@@ -80,13 +82,13 @@ class ClientProductsListPage extends StatelessWidget {
   Widget _iconShoppingBag() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(left: 10),
+        margin: const EdgeInsets.only(left: 10),
         child: con.items.value > 0
         ? Stack(
           children: [
             IconButton(
                 onPressed: () => con.goToOrderCreate(),
-                icon: Icon(
+                icon: const Icon(
                   Icons.shopping_bag_outlined,
                   size: 33,
                 )
@@ -99,15 +101,15 @@ class ClientProductsListPage extends StatelessWidget {
                   width: 16,
                   height: 16,
                   alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(30))
+                  ),
                   child: Text(
                     '${con.items.value}',
                     style: TextStyle(
                       fontSize: 12
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(30))
                   ),
                 )
             )
@@ -115,7 +117,7 @@ class ClientProductsListPage extends StatelessWidget {
         )
         : IconButton(
             onPressed: () => con.goToOrderCreate(),
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_bag_outlined,
               size: 30,
             )
@@ -126,14 +128,14 @@ class ClientProductsListPage extends StatelessWidget {
 
   Widget _textFieldSearch(BuildContext context) {
     return SafeArea(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width  * 0.75,
         child: TextField(
           onChanged: con.onChangeText,
           decoration: InputDecoration(
             hintText: 'Buscar producto',
-            suffixIcon: Icon(Icons.search, color: Colors.grey),
-            hintStyle: TextStyle(
+            suffixIcon: const Icon(Icons.search, color: Colors.grey),
+            hintStyle: const TextStyle(
               fontSize: 17,
               color: Colors.grey
             ),
@@ -141,17 +143,17 @@ class ClientProductsListPage extends StatelessWidget {
             filled: true,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.grey
               )
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                     color: Colors.grey
                 )
             ),
-            contentPadding: EdgeInsets.all(15)
+            contentPadding: const EdgeInsets.all(15)
           ),
         ),
       ),
@@ -164,32 +166,32 @@ class ClientProductsListPage extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+            margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
             child: ListTile(
               title: Text(product.name ?? ''),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     product.description ?? '',
                     maxLines: 2,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Text(
                     '\$${product.price.toString()}',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
-              trailing: Container(
+              trailing: SizedBox(
                 height: 70,
                 width: 60,
                 // padding: EdgeInsets.all(2),
@@ -198,10 +200,10 @@ class ClientProductsListPage extends StatelessWidget {
                   child: FadeInImage(
                     image: product.image1 != null
                         ? NetworkImage(product.image1!)
-                        : AssetImage('assets/img/no-image.png') as ImageProvider,
+                        : const AssetImage('assets/img/no-image.png') as ImageProvider,
                     fit: BoxFit.cover,
-                    fadeInDuration: Duration(milliseconds: 50),
-                    placeholder:  AssetImage('assets/img/no-image.png'),
+                    fadeInDuration: const Duration(milliseconds: 50),
+                    placeholder:  const AssetImage('assets/img/no-image.png'),
                   ),
                 ),
               ),

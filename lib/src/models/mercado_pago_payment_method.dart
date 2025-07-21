@@ -2,7 +2,6 @@ import 'package:udemy_flutter_delivery/src/models/mercado_pago_financial_institu
 import 'package:udemy_flutter_delivery/src/models/mercado_pago_issuer.dart';
 
 class MercadoPagoPaymentMethod {
-
   //IDENTIFICADOR DEL MEDIO DE PAGO
   String? id;
 
@@ -29,76 +28,85 @@ class MercadoPagoPaymentMethod {
   double? accreditationTime;
   List<MercadoPagoFinancialInstitution>? financialInstitutions;
 
-
   MercadoPagoPaymentMethod({this.id});
 
   static List<MercadoPagoPaymentMethod> fromJsonList(List<dynamic> jsonList) {
     List<MercadoPagoPaymentMethod> toList = [];
 
-    jsonList.forEach((item) {
+    for (var item in jsonList) {
       MercadoPagoPaymentMethod model = MercadoPagoPaymentMethod.fromJson(item);
       toList.add(model);
-    });
+    }
 
     return toList;
   }
 
-  MercadoPagoPaymentMethod.fromJson( Map<String, dynamic> json ) {
-    id                      = json['id'];
-    name                    = json['name'];
-    paymentTypeId           = json['payment_type_id'];
-    status                  = json['status'];
-    secureThumbnail         = json['secure_thumbnail'];
-    thumbnail               = json['thumbnail'];
-    deferredCapture         = json['deferred_capture'];
-    cardNumberLength        = (json['payment_type_id'] == 'credit_card')
+  MercadoPagoPaymentMethod.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    paymentTypeId = json['payment_type_id'];
+    status = json['status'];
+    secureThumbnail = json['secure_thumbnail'];
+    thumbnail = json['thumbnail'];
+    deferredCapture = json['deferred_capture'];
+    cardNumberLength = (json['payment_type_id'] == 'credit_card')
         ? (json['settings'] != null)
-        ? (json['settings'][0]['card_number']['length'] != null)
-        ? int.parse(json['settings'][0]['card_number']['length'].toString())
-        : -1
-        : -1
+            ? (json['settings'][0]['card_number']['length'] != null)
+                ? int.parse(
+                    json['settings'][0]['card_number']['length'].toString())
+                : -1
+            : -1
         : -1;
-    binPattern              = (json['payment_type_id'] == 'credit_card')
+    binPattern = (json['payment_type_id'] == 'credit_card')
         ? (json['settings'] != null)
-        ? json['settings'][0]['bin']['pattern']
-        : null
+            ? json['settings'][0]['bin']['pattern']
+            : null
         : null;
-    binExclusionPattern     = (json['payment_type_id'] == 'credit_card')
+    binExclusionPattern = (json['payment_type_id'] == 'credit_card')
         ? (json['settings'] != null)
-        ? json['settings'][0]['bin']['exclusion_pattern']
-        : null
+            ? json['settings'][0]['bin']['exclusion_pattern']
+            : null
         : null;
-    securityCodeLength      = (json['payment_type_id'] == 'credit_card')
+    securityCodeLength = (json['payment_type_id'] == 'credit_card')
         ? (json['settings'] != null)
-        ? (json['settings'][0]['security_code']['length'] != null)
-        ? int.parse(json['settings'][0]['security_code']['length'].toString())
-        : -1
-        : -1
+            ? (json['settings'][0]['security_code']['length'] != null)
+                ? int.parse(
+                    json['settings'][0]['security_code']['length'].toString())
+                : -1
+            : -1
         : -1;
-    additionalInfoNeeded    = json['additional_info_needed'];
-    minAllowedAmount        = (json['min_allowed_amount'] != null) ? double.parse(json['min_allowed_amount'].toString()) : -1;
-    maxAllowedAmount        = (json['max_allowed_amount'] != null) ? double.parse(json['max_allowed_amount'].toString()) : -1;
-    accreditationTime       = (json['accreditation_time'] != null) ? double.parse(json['accreditation_time'].toString()) : -1;
-    financialInstitutions   = (json['financial_institutions'] != null) ? MercadoPagoFinancialInstitution.fromJsonList(json['financial_institutions']) : [];
+    additionalInfoNeeded = json['additional_info_needed'];
+    minAllowedAmount = (json['min_allowed_amount'] != null)
+        ? double.parse(json['min_allowed_amount'].toString())
+        : -1;
+    maxAllowedAmount = (json['max_allowed_amount'] != null)
+        ? double.parse(json['max_allowed_amount'].toString())
+        : -1;
+    accreditationTime = (json['accreditation_time'] != null)
+        ? double.parse(json['accreditation_time'].toString())
+        : -1;
+    financialInstitutions = (json['financial_institutions'] != null)
+        ? MercadoPagoFinancialInstitution.fromJsonList(
+            json['financial_institutions'])
+        : [];
   }
 
-  Map<String, dynamic> toJson() =>
-      {
-        'id'                      : id,
-        'name'                    : name,
-        'payment_type_id'         : paymentTypeId,
-        'status'                  : status,
-        'secure_thumbnail'        : secureThumbnail,
-        'thumbnail'               : thumbnail,
-        'deferred_capture'        : deferredCapture,
-        'card_number_length'      : cardNumberLength,
-        'bin_pattern'             : binPattern,
-        'bin_exclusion_pattern'   : binExclusionPattern,
-        'security_code_length'    : securityCodeLength,
-        'additional_info_needed'  : additionalInfoNeeded.toString(),
-        'min_allowed_amount'      : minAllowedAmount,
-        'max_allowed_amount'      : maxAllowedAmount,
-        'accreditation_time'      : accreditationTime,
-        'financial_institutions'  : financialInstitutions
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'payment_type_id': paymentTypeId,
+        'status': status,
+        'secure_thumbnail': secureThumbnail,
+        'thumbnail': thumbnail,
+        'deferred_capture': deferredCapture,
+        'card_number_length': cardNumberLength,
+        'bin_pattern': binPattern,
+        'bin_exclusion_pattern': binExclusionPattern,
+        'security_code_length': securityCodeLength,
+        'additional_info_needed': additionalInfoNeeded.toString(),
+        'min_allowed_amount': minAllowedAmount,
+        'max_allowed_amount': maxAllowedAmount,
+        'accreditation_time': accreditationTime,
+        'financial_institutions': financialInstitutions
       };
 }
